@@ -1,4 +1,4 @@
-Nginx Sticky Module 
+Nginx Stiky Module 
 --
 
 Description:
@@ -16,15 +16,11 @@ Description:
 
 	Using a cookie to track the upstream server makes each browser unique.
 
-	When the sticky module can't apply, it switchs back to the classic Round Robin
+	When the sticky module can't apply, it switchs back to classic the Round Robin
 	Upstream.	Sticky module can't apply when :
 		- cookies are not supported by the browser
 		- a browser first connects
 		- the upstream server choosed by the sticky module is in error
-
-	* Sticky module is based on a "best effort" algorithm. Its aim is not to handle
-	* security somehow. It's been made to ensure that normal users are always
-	* redirected to the same  backend server: that's all!
 
 Installation
 
@@ -32,7 +28,7 @@ Installation
 	Modify your compile of Nginx by adding the following directive
 	(modified to suit your path of course):
 
-	./configure ... --add-module=/absolute/path/to/nginx-sticky-module
+	./configure --add-module=/absolute/path/to/nginx-sticky-module
 	make
 	make install
 
@@ -44,28 +40,19 @@ Usage
 		server 127.0.0.1:9002;
 	}
 
-	sticky [name=route] [domain=.foo.bar] [path=/] [expires=1h] [hash=index|md5|sha1];
+	sticky [name=route] [domain=.foo.bar] [path=/] [expires=1h];
 	  - name:    the name of the cookies used to track the persistant upstream srv
-	             default: route
-
-	  - domain:  the domain in which the cookie will be valid
-	             default: nothing. Let the browser handle this.
-
-	  - path:    the path in which the cookie will be valid
-	             default: nothing. Let the browser handle this.
-
-	  - expires: the validity duration of the cookie
-	             refault: nothing. It's a session cookie.
-	             restriction: must be a duration greater than one second
-
-	  - hash:    the hash mechanism to encode upstream server
-	             md5|sha1: well known hash
-	             index:    it's not hashed, an in-memory index is used instead
-	                       it's quicker and the overhead is shorter
-	             default: md5
+		           Default: route
+		- domain:  the domain in which the cookie will be valid
+		           Default: nothing. Let the browser handle this.
+		- path:    the path in which the cookie will be valid
+		           Default: nothing. Let the browser handle this.
+		- expires: the validity duration of the cookie
+		           Default: nothing. It's a session cookie.
+							 Restriction: must be a duration greater than one second
 
 Detail Mechanism
-	see docs/sticky.{vsd,pdf}	
+	see docs/mechanism.{vsd,pdf}	
 
 Contributing
 	http://code.google.com/p/nginx-sticky-module/
@@ -79,28 +66,35 @@ Author
 
 Copyright & License
 	This module is licenced under the BSD license.
-
-	Copyright (C) 2010 Jerome Loyet (jerome at loyet dot net)
-
+	
+	Copyright (C) 2009 by Jerome Loyet <jerome@loyet.net>.
+	
+	All rights reserved.
+	
 	Redistribution and use in source and binary forms, with or without
 	modification, are permitted provided that the following conditions
 	are met:
-
-	1. Redistributions of source code must retain the above copyright
+	
+	* Redistributions of source code must retain the above copyright
 	notice, this list of conditions and the following disclaimer.
-
-	2. Redistributions in binary form must reproduce the above copyright
+	
+	* Redistributions in binary form must reproduce the above copyright
 	notice, this list of conditions and the following disclaimer in the
 	documentation and/or other materials provided with the distribution.
+	
+	* Neither the name of the Taobao Inc. nor the names of its
+	contributors may be used to endorse or promote products derived from
+	this software without specific prior written permission.
+	
+	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+	"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+	LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+	A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+	HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+	SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
+	TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+	PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+	LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+	NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+	SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-	THIS SOFTWARE IS PROVIDED BY AUTHOR AND CONTRIBUTORS ``AS IS'' AND
-	ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-	IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-	ARE DISCLAIMED.  IN NO EVENT SHALL AUTHOR OR CONTRIBUTORS BE LIABLE
-	FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-	DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
-	OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-	HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-	LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
-	OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-	SUCH DAMAGE.
